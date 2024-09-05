@@ -5,6 +5,8 @@ import os
 import json
 from tap import Tap
 
+os.environ['OPENAI_API_KEY'] = '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'
+
 sys.setrecursionlimit(100000)
 
 # Import joblib for parallel processing
@@ -62,13 +64,13 @@ class Arguments(Tap):
     api_type: str = None
     api_base: str = None
     api_version: str = None
-    api_key: str = "YOUR_API_KEY"
+    api_key: str = "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"
 
     # Set the model parameters
     model_name: str = "gpt-3.5-turbo"  # "gpt-4-32k"
 
     # Optional model parameters
-    temperature: Optional[float] = None
+    temperature: Optional[float] = 0.1
     top_p: Optional[float] = None
     max_tokens: Optional[int] = None
     num_return_sequences: Optional[int] = None
@@ -82,11 +84,11 @@ class Arguments(Tap):
     verifier_num_return_sequences: Optional[int] = None
 
     # Meta model prompt path (JSON file)
-    meta_config_path: str = "prompts/meta-v0-2023-08-14-baseline.json"
+    meta_config_path: str = "/home/dyf/agent/meta-prompting/prompts/meta-v0-2023-08-14-baseline.json"
 
     # Task parameters
     task_name: str = "GameOf24"
-    input_path: str = None
+    input_path: str = '/home/dyf/agent/meta-prompting/data/GameOf24.jsonl'
     output_path: str = None
     output_directory: str = "RESULTS-TEST"
 
@@ -96,13 +98,13 @@ class Arguments(Tap):
     verbose: bool = False
 
     # Additional parameters
-    question_prefix_or_path: str = ""
+    question_prefix_or_path: str = "/home/dyf/agent/meta-prompting/prompts/meta-prompting-instruction.txt"
     question_suffix_or_path: str = "\n\nLet's first come up with a list of experts you may want to consult for this problem and then immediately start solving it."  # "" # "\n\nLet's think step by step."
     intermediate_feedback = "Based on the information given, what are the most logical next steps or conclusions? Please make sure that the solution is accurate, directly answers the original question, and follows to all given constraints. Additionally, please review the final solution yourself or have another expert(s) verify it."
     use_zero_shot_cot_in_expert_messages: bool = False
 
     # Max num
-    max_num: int = 9999
+    max_num: int = 1
 
     # Additional parameters
     include_expert_name_in_instruction: bool = False
